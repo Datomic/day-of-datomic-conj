@@ -18,81 +18,74 @@
 ;; Connect to it
 (def conn (d/connect db-uri))
 
-(comment
-  ;; schema is plain data: https://docs.datomic.com/schema/schema-reference.html
-  (def schema [{:db/ident       :owner/id
-                :db/valueType   :db.type/uuid
-                :db/cardinality :db.cardinality/one
-                :db/unique      :db.unique/identity}
-               {:db/ident       :owner/name
-                :db/valueType   :db.type/string
-                :db/cardinality :db.cardinality/one}
-               {:db/ident       :owner/email
-                :db/valueType   :db.type/string
-                :db/cardinality :db.cardinality/one}
-               ;; TODO Define the :owner/pets schema, remember it is a relation
-               {:db/ident       :owner/pets
-                :db/valueType   :db.type/ref
-                :db/cardinality :db.cardinality/many}
-               {:db/ident       :pet/id                     ;; TODO I want to this to be a unique identity, what is missing?
-                :db/valueType   :db.type/uuid
-                :db/cardinality :db.cardinality/one
-                :db/unique      :db.unique/identity}
-               {:db/ident       :pet/name
-                :db/valueType   :db.type/string
-                :db/cardinality :db.cardinality/one}
-               {:db/ident       :pet/type                   ;; TODO Define the enums for the pet type: :pet.type/cat, :pet.type/dog, :pet.type/other
-                :db/valueType   :db.type/ref                ;; It's a ref to what? To any entity that exists, it's up to our application to create the correct boundaries.
-                :db/cardinality :db.cardinality/one}
-               {:db/ident :pet.type/cat}
-               {:db/ident :pet.type/dog}
-               {:db/ident :pet.type/other}])
 
-  ;; and is installed as any other transaction
-  @(d/transact conn schema)
+;; schema is plain data: https://docs.datomic.com/schema/schema-reference.html
+(def schema [{:db/ident       :owner/id
+              :db/valueType   :db.type/uuid
+              :db/cardinality :db.cardinality/one
+              :db/unique      :db.unique/identity}
+             {:db/ident       :owner/name
+              :db/valueType   :db.type/string
+              :db/cardinality :db.cardinality/one}
+             {:db/ident       :owner/email
+              :db/valueType   :db.type/string
+              :db/cardinality :db.cardinality/one}
+             ;; TODO Define the :owner/pets schema, remember it is a relation
+             {:db/ident       :pet/id                       ;; TODO I want to this to be a unique identity, what is missing?
+              :db/valueType   :db.type/uuid
+              :db/cardinality :db.cardinality/one}
+             {:db/ident       :pet/name
+              :db/valueType   :db.type/string
+              :db/cardinality :db.cardinality/one}
+             {:db/ident       :pet/type                     ;; TODO Define the enums for the pet type: :pet.type/cat, :pet.type/dog, :pet.type/other
+              :db/valueType   :db.type/ref                  ;; It's a ref to what? To any entity that exists, it's up to our application to create the correct boundaries.
+              :db/cardinality :db.cardinality/one}])
 
-  ;; Let's create a UUID for our owner entity, notice I'm using a squuid instead of a random uuid,
-  ;; they ar preferable over uuids for uniqueness checks: https://docs.datomic.com/schema/identity.html#squuids
-  (def owner-id (d/squuid))
+;; and is installed as any other transaction
+@(d/transact conn schema)
 
-  (def floki-id (d/squuid))
+;; Let's create a UUID for our owner entity, notice I'm using a squuid instead of a random uuid,
+;; they ar preferable over uuids for uniqueness checks: https://docs.datomic.com/schema/identity.html#squuids
+(def owner-id (d/squuid))
 
-  ;; Let's add an owner using a EntityMaps with one Pet
-  ;; As you can see you can transact nested entities!
-  ;; Also notice I'm not adding an email here there is no check for required data
-  @(d/transact conn [{:owner/id   owner-id
-                      :owner/name "Rana"
-                      :owner/pets [{:db/id    "F"           ;; TODO What is this? You can learn more about it here: https://docs.datomic.com/transactions/transaction-data-reference.html#tempids
-                                    :pet/id   floki-id
-                                    :pet/name "Floki"
-                                    :pet/type :pet.type/cat}]}])
+(def floki-id (d/squuid))
 
-  (def bjorn-id (d/squuid))
+;; Let's add an owner using a EntityMaps with one Pet
+;; As you can see you can transact nested entities!
+;; Also notice I'm not adding an email here there is no check for required data
+@(d/transact conn [{:owner/id   owner-id
+                    :owner/name "Rana"
+                    :owner/pets [{:db/id    "F"             ;; TODO What is this? You can learn more about it here: https://docs.datomic.com/transactions/transaction-data-reference.html#tempids
+                                  :pet/id   floki-id
+                                  :pet/name "Floki"
+                                  :pet/type :pet.type/cat}]}])
 
-  ;; The return of the transaction info
-  (def tx-return @(d/transact conn [{:owner/id owner-id
-                                     :owner/pets [{:db/id    "B"
-                                                   :pet/id   bjorn-id
-                                                   :pet/name "Bjorn"
-                                                   :pet/type :pet.type/cat}]}]))
+(def bjorn-id (d/squuid))
 
-  ;; You can see what's inside
-  (clojure.pprint/pprint tx-return)
+;; The return of the transaction info
+(def tx-return @(d/transact conn [{:owner/id   owner-id
+                                   :owner/pets [{:db/id    "B"
+                                                 :pet/id   bjorn-id
+                                                 :pet/name "Bjorn"
+                                                 :pet/type :pet.type/cat}]}]))
 
-  ;; My name is wrong lets create a new transaction to fix it
-  ;; When updating an attribute of cardinality one of an existing entity,
-  ;; it will implicitly create two assertions one to retract the old value and one to add the new one
-  ;; https://docs.datomic.com/client-tutorial/retract.html#implicit-retract
-  @(d/transact conn [[:db/add [:owner/id owner-id] :owner/name "Hanna"]])
+;; You can see what's inside
+(clojure.pprint/pprint tx-return)
 
-  (d/db conn)
+;; My name is wrong lets create a new transaction to fix it
+;; When updating an attribute of cardinality one of an existing entity,
+;; it will implicitly create two assertions one to retract the old value and one to add the new one
+;; https://docs.datomic.com/client-tutorial/retract.html#implicit-retract
+@(d/transact conn [[:db/add [:owner/id owner-id] :owner/name "Hanna"]])
 
-  ;; Let's see the datoms about the created entities on my database, don't worry about understanding this query now
-  (d/q '[:find ?e ?a ?v ?t ?op
-         :where (or [?e :owner/id]
-                    [?e :pet/id])
-         [?e ?a ?v ?t ?op]]
-       (d/db conn)))
+(d/db conn)
+
+;; Let's see the datoms about the created entities on my database, don't worry about understanding this query now
+(d/q '[:find ?e ?a ?v ?t ?op
+       :where (or [?e :owner/id]
+                  [?e :pet/id])
+       [?e ?a ?v ?t ?op]]
+     (d/db conn))
 
 ;; =============== Workshop 2 ===============
 
@@ -101,7 +94,7 @@
 @(d/transact conn [[:db/add "P" :pet/id (random-uuid)]
                    [:db/add "P" :pet/name "Poti"]
                    [:db/add "P" :pet/type :pet.type/cat]
-                   [:db/add [:owner/id owner-id] :owner/pets "P"]])
+                   [:db/add ??? :owner/pets ???]])
 
 ;; This is pull, another API we can use to query our data
 ;; Here we're showing the name of the owner and the name of all the cats
@@ -110,12 +103,12 @@
 
 ;; TODO Add an email on Hanna's entity, you can use the list form or the map form
 ;; Don't forget to use some identity so datomic can identify the entity
-@(d/transact conn [{:owner/id owner-id
+@(d/transact conn [{:owner/id    owner-id
                     :owner/email "hanna@gmail.com"}])
 
 ;; Remember we said that schemas are also entities? We can also query then
-(d/q '{:find  [(pull ?e [* {:db/valueType [:db/ident]
-                            :db/cardinality [:db/ident]
+(d/q '{:find  [(pull ?e [* {:db/valueType          [:db/ident]
+                            :db/cardinality        [:db/ident]
                             :db.install/_attribute [:db/ident]}])]
        :in    [$ ?schema]
        :where [[?e :db/ident ?schema]]}
@@ -123,18 +116,16 @@
 
 ;; And finally transactions are entities and we can add extra datoms to it
 ;; TODO lest add a new attribute called :audit/email
-(def schema [{:db/ident       :audit/email
-              :db/valueType   :db.type/string
-              :db/cardinality :db.cardinality/one}])
+(def schema [])
 
 @(d/transact conn schema)
 
 (def fiona-id (d/squuid))
 
 ;; To add extra information on a transaction we need to add a reserved tempid "datomic.tx"
-@(d/transact conn [{:db/id "datomic.tx"
+@(d/transact conn [{:db/id       "datomic.tx"
                     :audit/email "hanna@email.com"}
-                   {:owner/id owner-id
+                   {:owner/id   owner-id
                     :owner/pets [{:db/id    "F"
                                   :pet/id   fiona-id
                                   :pet/name "Fiona"
