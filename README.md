@@ -37,6 +37,10 @@ From your shell system, run (at the folder you unziped your transactor):
 ### Connecting to a Database
 At the workshop code you will find the connection instructions.
 
+### Database Sample
+To get a sample database follow the tutorial below starting from the *Getting the Data* section
+[mbrainz-sample](https://github.com/Datomic/mbrainz-sample)
+
 ## Questions, Feedback?
 
 For specific feedback on the tutorials, please create an
