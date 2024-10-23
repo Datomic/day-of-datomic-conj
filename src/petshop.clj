@@ -1,5 +1,9 @@
 (require '[datomic.api :as d])
 
+;; Before you start notice that every place with a TODO
+;; comment means that is something you need to complete your self
+;; don't worry, we're here for you, just raise your hand and we'll help ;)
+
 ;; =============== Workshop 1 ===============
 
 ;; To download and set up a transactor follow the tutorial: https://docs.datomic.com/setup/pro-setup.html
@@ -165,7 +169,7 @@
 ;; Here I'm getting the instant time of when the entity id #uuid"63298959-0f4c-4edb-afef-44eda878ac48"
 ;; was created
 (def as-of-tx (first (d/q '[:find [?tx]
-                            :where [?_ :owner/id #uuid"63298959-0f4c-4edb-afef-44eda878ac48" ?tx]] ;; -> [e a v t] Here we access the t of the datom.
+                            :where [?_ :owner/id owner-id ?tx]] ;; -> [e a v t] Here we access the t of the datom.
                           (d/db conn))))
 
 (d/query {:query      '[:find (pull ?cat [*])
@@ -185,13 +189,13 @@
 
 ;; As-of: Database view until a defined point on time
 (d/q '[:find (pull ?e [*])
-       :where [?e :owner/id #uuid"63298959-0f4c-4edb-afef-44eda878ac48"]]
+       :where [?e :owner/id owner-id]]
      (d/as-of (d/db conn) as-of-tx))
 
 ;; Since: Database view since a defined point in time
 ;; TODO Why is returning nothing?
 (d/q '[:find (pull ?e [* {:owner/pets [*]}])
-       :where [?e :owner/id #uuid"63298959-0f4c-4edb-afef-44eda878ac48"]]
+       :where [?e :owner/id owner-id]]
      (d/since (d/db conn) as-of-tx))
 
 ;; d with will simulate a transaction without really transact the data
@@ -203,5 +207,5 @@
 
 ;; TODO There is no Misha yet, why? How how to fix it?
 (d/q '[:find (pull ?e [* {:owner/pets [*]}])
-       :where [?e :owner/id #uuid"63298959-0f4c-4edb-afef-44eda878ac48"]]
+       :where [?e :owner/id owner-id]]
      (d/db conn))
