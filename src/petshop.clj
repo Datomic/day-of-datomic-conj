@@ -7,7 +7,8 @@
 ;; =============== Workshop 1 ===============
 
 ;; To download and set up a transactor follow the tutorial: https://docs.datomic.com/setup/pro-setup.html
-
+;; TLDR; In a terminal form the Datomic Distribution run:
+;; ```$ bin/transactor config/samples/dev-transactor-template.properties ```
 ;; A datomic peer dynamically get a connection.
 ;; It can connect in multiple simutaneously connections
 ;; It only changes the db uri for connection
