@@ -1,6 +1,6 @@
 (require '[datomic.api :as d])
 
-(def db-uri "datomic:dev://localhost:4334/mbrainz-sample")
+(def db-uri "datomic:dev://localhost:4334/mbrainz-1968-1973")
 
 (def conn (d/connect db-uri))
 (def db (d/db conn))
