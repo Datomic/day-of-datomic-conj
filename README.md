@@ -2,6 +2,11 @@
 
 The Amazing Day of Datomic project is a introductory presentation
 for learning [Datomic](http://datomic.com).
+
+> Presentation Slides
+
+[Slides deck](https://docs.google.com/presentation/d/141ph-hOZVqlCaxPIkVY82Ye0icDHPo45s9wgwU_DkbA/edit?usp=sharing)
+
 <br>
 
 ## Getting Started
