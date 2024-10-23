@@ -2,9 +2,9 @@
 
 ;; =============== Workshop 1 ===============
 
-;; To download and setup a transactor follow the tutorial: https://docs.datomic.com/setup/pro-setup.html
+;; To download and set up a transactor follow the tutorial: https://docs.datomic.com/setup/pro-setup.html
 
-;; A datomic peer dinamically get a connection.
+;; A datomic peer dynamically get a connection.
 ;; It can connect in multiple simutaneously connections
 ;; It only changes the db uri for connection
 
@@ -45,7 +45,7 @@
 @(d/transact conn schema)
 
 ;; Let's create a UUID for our owner entity, notice I'm using a squuid instead of a random uuid,
-;; they ar preferable over uuids for uniqueness checks: https://docs.datomic.com/schema/identity.html#squuids
+;; they are preferable over uuids for uniqueness checks: https://docs.datomic.com/schema/identity.html#squuids
 (def owner-id (d/squuid))
 
 (def floki-id (d/squuid))
@@ -72,7 +72,7 @@
 ;; You can see what's inside
 (clojure.pprint/pprint tx-return)
 
-;; My name is wrong lets create a new transaction to fix it
+;; My name is wrong; lets create a new transaction to fix it
 ;; When updating an attribute of cardinality one of an existing entity,
 ;; it will implicitly create two assertions one to retract the old value and one to add the new one
 ;; https://docs.datomic.com/client-tutorial/retract.html#implicit-retract
@@ -156,7 +156,6 @@
 ;; https://docs.datomic.com/transactions/transaction-functions.html
 
 ;; =============== Workshop 3 ===============
-
 
 ;; Database view in the current state
 (d/q '[:find (pull ?e [*])
