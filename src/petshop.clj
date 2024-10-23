@@ -1,10 +1,15 @@
 (require '[datomic.api :as d])
 
+;; Before you start notice that every place with a TODO
+;; comment means that is something you need to complete your self
+;; don't worry, we're here for you, just raise your hand and we'll help ;)
+
 ;; =============== Workshop 1 ===============
 
-;; To download and setup a transactor follow the tutorial: https://docs.datomic.com/setup/pro-setup.html
-
-;; A datomic peer dinamically get a connection.
+;; To download and set up a transactor follow the tutorial: https://docs.datomic.com/setup/pro-setup.html
+;; TLDR; In a terminal form the Datomic Distribution run:
+;; ```$ bin/transactor config/samples/dev-transactor-template.properties ```
+;; A datomic peer dynamically get a connection.
 ;; It can connect in multiple simutaneously connections
 ;; It only changes the db uri for connection
 
@@ -45,7 +50,7 @@
 @(d/transact conn schema)
 
 ;; Let's create a UUID for our owner entity, notice I'm using a squuid instead of a random uuid,
-;; they ar preferable over uuids for uniqueness checks: https://docs.datomic.com/schema/identity.html#squuids
+;; they are preferable over uuids for uniqueness checks: https://docs.datomic.com/schema/identity.html#squuids
 (def owner-id (d/squuid))
 
 (def floki-id (d/squuid))
@@ -72,7 +77,7 @@
 ;; You can see what's inside
 (clojure.pprint/pprint tx-return)
 
-;; My name is wrong lets create a new transaction to fix it
+;; My name is wrong; lets create a new transaction to fix it
 ;; When updating an attribute of cardinality one of an existing entity,
 ;; it will implicitly create two assertions one to retract the old value and one to add the new one
 ;; https://docs.datomic.com/client-tutorial/retract.html#implicit-retract
@@ -157,46 +162,32 @@
 
 ;; =============== Workshop 3 ===============
 
+(def db (d/db conn))
 
 ;; Database view in the current state
 (d/q '[:find (pull ?e [*])
        :where [?e :owner/id owner-id]]
-     (d/db conn))
+     db)
 
 ;; Here I'm getting the instant time of when the entity id #uuid"63298959-0f4c-4edb-afef-44eda878ac48"
 ;; was created
 (def as-of-tx (first (d/q '[:find [?tx]
-                            :where [?_ :owner/id #uuid"63298959-0f4c-4edb-afef-44eda878ac48" ?tx]] ;; -> [e a v t] Here we access the t of the datom.
-                          (d/db conn))))
-
-(d/query {:query      '[:find (pull ?cat [*])
-                        :where [?cat :pet/name ?cat-name]
-                        [(>= ?cat-name "F")]
-                        [(< ?cat-name "G")]]
-          :args       [(d/db conn)]
-          :io-context :query/cat-by-name-starting-with-f})
-
-(d/pull (d/db conn) '[*] as-of-tx)
-
-(d/tx->t as-of-tx)
-
-; time -> tx instant time
-; tx -> transaction entity? Also the counter, the counter is extracted from the tx entity id
-; t -> Counter always increases, not necessary by one
+                            :where [?_ :owner/id owner-id ?tx]] ;; -> [e a v t] Here we access the t of the datom.
+                          db)))
 
 ;; As-of: Database view until a defined point on time
 (d/q '[:find (pull ?e [*])
-       :where [?e :owner/id #uuid"63298959-0f4c-4edb-afef-44eda878ac48"]]
-     (d/as-of (d/db conn) as-of-tx))
+       :where [?e :owner/id owner-id]]
+     (d/as-of db as-of-tx))
 
 ;; Since: Database view since a defined point in time
 ;; TODO Why is returning nothing?
 (d/q '[:find (pull ?e [* {:owner/pets [*]}])
-       :where [?e :owner/id #uuid"63298959-0f4c-4edb-afef-44eda878ac48"]]
-     (d/since (d/db conn) as-of-tx))
+       :where [?e :owner/id owner-id]]
+     (d/since db as-of-tx))
 
 ;; d with will simulate a transaction without really transact the data
-(def db-with-misha (d/with (d/db conn) [{:owner/id   owner-id
+(def db-with-misha (d/with db [{:owner/id   owner-id
                                          :owner/pets [{:db/id    "M" ;; Arrumar tempid
                                                        :pet/id   (random-uuid)
                                                        :pet/name "Misha"
@@ -204,5 +195,5 @@
 
 ;; TODO There is no Misha yet, why? How how to fix it?
 (d/q '[:find (pull ?e [* {:owner/pets [*]}])
-       :where [?e :owner/id #uuid"63298959-0f4c-4edb-afef-44eda878ac48"]]
+       :where [?e :owner/id owner-id]]
      (d/db conn))
