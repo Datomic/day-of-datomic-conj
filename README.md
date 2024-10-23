@@ -43,7 +43,7 @@ From your shell system, run (at the folder you unziped your transactor):
 <br>
 
 > ### Connecting to a Database
-At the workshop code you will find the connection instructions.
+In the workshop code you will find the connection instructions.
 
 <br>
 
