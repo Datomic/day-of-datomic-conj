@@ -27,7 +27,7 @@ It requires a transactor to be running.
 
 This guide will use the config directory in your datomic-pro distribution directory:
 
-```cp config/samples/dev-transactor-template.properties <your-download-folder>/config/dev-transactor-template.properties```
+```cp config/samples/dev-transactor-template.properties config/dev-transactor-template.properties```
 
 ### Starting a Transactor
 From your shell system, run (at the folder you unziped your transactor):
