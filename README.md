@@ -38,7 +38,15 @@ From your shell system, run (at the folder you unziped your transactor):
 
 ```bin/transactor config/dev-transactor-template.properties```
 
+<br>
 
+> ### Running a REPL
+
+You can use your prefered IDE, but if you don't have the enviroment set up in your machine you can use Datomic distribuition optionally:
+
+In config directory in your datomic-pro distribution you can use the command below to run a REPL
+
+```bin/repl```
 
 <br>
 
