@@ -44,9 +44,9 @@ From your shell system, run (at the folder you unziped your transactor):
 
 > ### Running a REPL
 
-You can use your prefered IDE, but if you don't have the enviroment set up in your machine you can use Datomic distribuition optionally:
+You can use your prefered IDE, but if you don't have the enviroment set up in your machine you can use Datomic REPL distribuition optionally:
 
-In config directory in your datomic-pro distribution you can use the command below to run a REPL
+With the transactor running, open another terminal tab and in config directory in your datomic-pro distribution you can use the command below to run a REPL
 
 ```bin/repl```
 
@@ -60,6 +60,7 @@ In the workshop code you will find the connection instructions.
 ### Database Sample
 To get a sample database follow the tutorial below using only the *Getting the Data* section
 [mbrainz-sample](https://github.com/Datomic/mbrainz-sample)
+* Run the commands in a separate terminal tab too.
 
 
 <br>
