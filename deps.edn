@@ -1,2 +1,2 @@
 {:paths ["src"]
- :deps {com.datomic/peer {:mvn/version "1.0.7187"}}}
+ :deps {com.datomic/peer {:mvn/version "1.0.7260"}}}
