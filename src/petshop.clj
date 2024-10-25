@@ -166,34 +166,39 @@
 
 ;; Database view in the current state
 (d/q '[:find (pull ?e [*])
-       :where [?e :owner/id owner-id]]
-     db)
+       :in $ ?owner-id
+       :where [?e :owner/id ?owner-id]]
+     db owner-id)
 
 ;; Here I'm getting the instant time of when the entity id #uuid"63298959-0f4c-4edb-afef-44eda878ac48"
 ;; was created
 (def as-of-tx (first (d/q '[:find [?tx]
-                            :where [?_ :owner/id owner-id ?tx]] ;; -> [e a v t] Here we access the t of the datom.
-                          db)))
+                            :in $ ?owner-id
+                            :where [?_ :owner/id ?owner-id ?tx]] ;; -> [e a v t] Here we access the t of the datom.
+                          db owner-id)))
 
 ;; As-of: Database view until a defined point on time
 (d/q '[:find (pull ?e [*])
-       :where [?e :owner/id owner-id]]
-     (d/as-of db as-of-tx))
+       :in $ ?owner-id
+       :where [?e :owner/id ?owner-id]]
+     (d/as-of db as-of-tx) owner-id)
 
 ;; Since: Database view since a defined point in time
 ;; TODO Why is returning nothing?
 (d/q '[:find (pull ?e [* {:owner/pets [*]}])
-       :where [?e :owner/id owner-id]]
-     (d/since db as-of-tx))
+       :in $ ?owner-id
+       :where [?e :owner/id ?owner-id]]
+     (d/since db as-of-tx) owner-id)
 
 ;; d with will simulate a transaction without really transact the data
 (def db-with-misha (d/with db [{:owner/id   owner-id
-                                         :owner/pets [{:db/id    "M" ;; Arrumar tempid
-                                                       :pet/id   (random-uuid)
-                                                       :pet/name "Misha"
-                                                       :pet/type :pet.type/cat}]}]))
+                                :owner/pets [{:db/id    "M" ;; Arrumar tempid
+                                              :pet/id   (random-uuid)
+                                              :pet/name "Misha"
+                                              :pet/type :pet.type/cat}]}]))
 
 ;; TODO There is no Misha yet, why? How how to fix it?
 (d/q '[:find (pull ?e [* {:owner/pets [*]}])
-       :where [?e :owner/id owner-id]]
-     (d/db conn))
+       :in $ ?owner-id
+       :where [?e :owner/id ?owner-id]]
+     (d/db conn) owner-id)
