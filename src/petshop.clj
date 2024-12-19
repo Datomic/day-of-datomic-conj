@@ -203,24 +203,27 @@
 ;; TODO Get the tx of the entity `owner-id`
 
 (def as-of-tx (first (d/q '[:find [?tx]
-                            :where [?e :owner/id owner-id]] ;; hint: [e a v tx]
-                          db)))
+                            :in $ ?owner-id
+                            :where [?e :owner/id ?owner-id]] ;; hint: [e a v tx]
+                          db owner-id)))
 
 ;; INFO: `d/as-of`, view until a defined point on time
 (d/q '[:find (pull ?e [*])
-       :where [?e :owner/id owner-id]]
-     (d/as-of db as-of-tx))
+       :in $ ?owner-id
+       :where [?e :owner/id ?owner-id]]
+     (d/as-of db as-of-tx) owner-id)
 
 ;; INFO: `d/since`, Database view since a defined point in time
 ;; TODO Why is returning nothing?
 (d/q '[:find (pull ?e [* {:owner/pets [*]}])
-       :where [?e :owner/id owner-id]]
-     (d/since db as-of-tx))
+       :in $ ?owner-id
+       :where [?e :owner/id ?owner-id]]
+     (d/since db as-of-tx) owner-id)
 
 ;; INFO: `d/with` will simulate a transaction without really transact the data
 (def db-with-misha (d/with db [{:owner/id   owner-id
-                                :owner/pets [{:db/id    "M" ;; Explain better tempids generation when creating a new entity in a ref
-                                              :pet/id   (d/squiid)
+                                :owner/pets [{:db/id    "M"
+                                              :pet/id   (d/squuid)
                                               :pet/name "Misha"
                                               :pet/type :pet.type/cat}]}]))
 
