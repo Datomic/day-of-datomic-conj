@@ -1,81 +1,124 @@
-## CONJ 2024 Day of Datomic
+# Amazing Day of Datomic
 
-The Amazing Day of Datomic project is a introductory presentation
-for learning [Datomic](http://datomic.com).
+The **Amazing Day of Datomic** is an interactive workshop designed to teach the fundamentals of [Datomic](http://datomic.com).
 
-> Presentation Slides
+[📽️ Presentation Slides](https://docs.google.com/presentation/d/1OagiOnZf4vPinEvLs8rV9n3Cy2g7IC9rUMhaGQSE7qM/edit?slide=id.g2d4ad46bc0e_2_0#slide=id.g2d4ad46bc0e_2_0)
 
-[Slides deck](https://docs.google.com/presentation/d/141ph-hOZVqlCaxPIkVY82Ye0icDHPo45s9wgwU_DkbA/edit?usp=sharing)
+---
 
-<br>
+## 📑 Table of Contents
+
+1. [About](#about)
+2. [Getting Started](#getting-started)
+    - [Install Clojure](#install-clojure)
+    - [Download Datomic Pro](#download-datomic-pro)
+    - [Run a Transactor](#run-a-transactor)
+    - [Running a REPL](#running-a-repl)
+    - [Running in Editors](#running-in-editors)
+3. [Connecting to a Database](#connecting-to-a-database)
+4. [Database Sample](#database-sample)
+5. [Learn More](#learn-more)
+6. [Questions & Feedback](#questions--feedback)
+
+---
+
+## What You’ll Find in This Repo
+
+Inside the `src` directory, you'll find three Clojure files:
+
+- **petshop.clj** – The main file used in the workshop. It walks through basic Datomic operations such as creating a database, performing transactions, and running queries.
+- **music_brainz.clj** – Contains more complex query examples. To run it, you'll need to restore the MusicBrainz sample database. See how to do this in the [Database Sample](#database-sample) section.
+- **partitions.clj** – Demonstrates how to use [implicit partitions](https://docs.datomic.com/transactions/partitions.html#implicit-partitions) in Datomic and discusses the performance implications.
+
+---
 
 ## Getting Started
 
-> ### Download 
-Get Datomic Pro
+### Install Clojure
 
-Datomic Pro is distributed as a zip. You can download the latest version of Datomic Pro here or with this curl command:
+Follow the official instructions to install Clojure for your operating system:
 
-```curl https://datomic-pro-downloads.s3.amazonaws.com/1.0.7260/datomic-pro-1.0.7260.zip -O```
+https://clojure.org/guides/install_clojure
 
-or click to download [here](https://datomic-pro-downloads.s3.amazonaws.com/1.0.7260/datomic-pro-1.0.7260.zip).
+You'll also need to have Java installed.
 
-  
-After you download Datomic, unzip it locally. 
-```unzip  <your-download-folder>/datomic-pro-1.0.7260.zip```
+---
 
-<br>
+### Download Datomic Pro
 
-> ### Run a Transactor
-For this tutorial, you will run a *dev mode* transactor on your local machine. 
-Dev storage will persist your data by using local disk files for storage. 
-It requires a transactor to be running.
+Download Datomic Pro from:
 
-This guide will use the config directory in your datomic-pro distribution directory:
+https://docs.datomic.com/setup/pro-setup.html#get-datomic
 
-```cp config/samples/dev-transactor-template.properties config/dev-transactor-template.properties```
+---
 
+### Run a Transactor
 
-<br>
+For this workshop, you’ll run a **dev mode** transactor locally.
 
-> ### Starting a Transactor
-From your shell system, run (at the folder you unziped your transactor):
+Dev mode uses local disk storage and requires a transactor process to be running:
 
-```bin/transactor config/dev-transactor-template.properties```
+https://docs.datomic.com/setup/pro-setup.html#starting-a-transactor
 
+---
 
+### Running a REPL
 
-<br>
+You can use your preferred IDE or run the Datomic REPL directly.
 
-> ### Running a REPL
+If you don’t have a development environment set up, Datomic provides a REPL distribution.
 
-You can use your prefered IDE, but if you don't have the enviroment set up in your machine you can use Datomic REPL distribuition optionally:
+With the transactor running, open another terminal tab, navigate to the `config` directory of your Datomic Pro distribution, and run:
 
-With the transactor running, open another terminal tab and in config directory in your datomic-pro distribution you can use the command below to run a REPL
+```bash
+bin/repl
+```
 
-```bin/repl```
+---
 
-<br>
+### Running in Editors
 
-> ### Connecting to a Database
-In the workshop code you will find the connection instructions.
+You can also run the examples in your favorite editor:
 
-<br>
+VSCode + Calva: https://calva.io/getting-started/
+
+IntelliJ + Cursive: https://cursive-ide.com/userguide/index.html
+
+Emacs + CIDER: https://docs.cider.mx/cider/basics/installation.html
+
+---
+
+### Connecting to a Database
+
+Here you can learn how to connect to a database:
+
+https://docs.datomic.com/peer-tutorial/connect-to-a-database.html
+
+Connection instructions are also included in the workshop source code.
+
+---
 
 ### Database Sample
-To get a sample database follow the tutorial below using only the *Getting the Data* section
+
+To use a sample database, follow the tutorial below using only the *Getting the Data* section of the mbrainz-sample repository.
+
 [mbrainz-sample](https://github.com/Datomic/mbrainz-sample)
 * Run the commands in a separate terminal tab too.
 
+---
 
-<br>
-<br>
+## Learn more
 
+* [Datomic docs](https://docs.datomic.com/datomic-overview.html)
+* https://docs.datomic.com/datomic-overview.html
+* https://www.learndatalogtoday.org
+* https://max-datom.com
+* https://docs.datomic.com/resources/learn-by-example.html
+* [Original day of datomic repo with more examples](https://github.com/Datomic/day-of-datomic)
+
+---
 
 ## Questions, Feedback?
 
-For specific feedback on the tutorials, please create an
-[issue](https://github.com/Datomic/day-of-datomic/issues).
-
-For questions about Datomic, try the [public mailing
-list](http://groups.google.com/group/datomic).
+For questions or feedback about the tutorials, please create an
+[issue](https://github.com/Datomic/day-of-datomic-conj/issues).
