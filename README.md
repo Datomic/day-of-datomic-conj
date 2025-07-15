@@ -80,11 +80,11 @@ bin/repl
 
 You can also run the examples in your favorite editor:
 
-VSCode + Calva: https://calva.io/getting-started/
+[VSCode + Calva](https://calva.io/getting-started/)
 
-IntelliJ + Cursive: https://cursive-ide.com/userguide/index.html
+[IntelliJ + Cursive](https://cursive-ide.com/userguide/index.html)
 
-Emacs + CIDER: https://docs.cider.mx/cider/basics/installation.html
+[Emacs + CIDER](https://docs.cider.mx/cider/basics/installation.html)
 
 ---
 
@@ -109,6 +109,8 @@ To use a sample database, follow the tutorial below using only the *Getting the 
 
 ## Learn more
 
+### Datomic
+
 * [Datomic docs](https://docs.datomic.com/datomic-overview.html)
 * https://docs.datomic.com/datomic-overview.html
 * https://www.learndatalogtoday.org
@@ -117,6 +119,13 @@ To use a sample database, follow the tutorial below using only the *Getting the 
 * [Original day of datomic repo with more examples](https://github.com/Datomic/day-of-datomic)
 
 ---
+
+### Clojure 
+
+* https://clojure.org
+* https://4clojure.oxal.org
+* https://tryclojure.org
+* https://www.braveclojure.com
 
 ## Questions, Feedback?
 
