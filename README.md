@@ -1,6 +1,7 @@
 # Amazing Day of Datomic
 
-The **Amazing Day of Datomic** is an interactive workshop designed to teach the fundamentals of [Datomic](http://datomic.com).
+Datomic is a distributed, general-purpose database that provides immutability, time-aware data access, and strong ACID guarantees.
+The **Amazing Day of Datomic** is an interactive workshop designed to teach you these fundamentals and help you get hands-on experience with Datomic.
 
 [📽️ Presentation Slides](https://docs.google.com/presentation/d/1OagiOnZf4vPinEvLs8rV9n3Cy2g7IC9rUMhaGQSE7qM/edit?slide=id.g2d4ad46bc0e_2_0#slide=id.g2d4ad46bc0e_2_0)
 
@@ -111,21 +112,21 @@ To use a sample database, follow the tutorial below using only the *Getting the 
 
 ### Datomic
 
-* [Datomic docs](https://docs.datomic.com/datomic-overview.html)
-* https://docs.datomic.com/datomic-overview.html
-* https://www.learndatalogtoday.org
-* https://max-datom.com
-* https://docs.datomic.com/resources/learn-by-example.html
-* [Original day of datomic repo with more examples](https://github.com/Datomic/day-of-datomic)
+* [Datomic Documentation](https://docs.datomic.com/datomic-overview.html) – Official Datomic documentation.
+* [Learn Datalog Today](https://www.learndatalogtoday.org) – an interactive tutorial on Datalog query language the one used by Datomic
+* [Max Datom](https://max-datom.com) – An interactive Datomic tutorial with exercises and visualizations.
+* [Learn by Example](https://docs.datomic.com/resources/learn-by-example.html) – Build a simple TODO app using Datomic to learn by doing.
+* [Original Day of Datomic Repository](https://github.com/Datomic/day-of-datomic) – The original Day of Datomic repo, with additional examples and exercises.
+* [Original Day of Datomic Video Recording](https://www.youtube.com/watch?v=yWdfhQ4_Yfw&t=31s) – Recording of the original Day of Datomic presentation.
 
 ---
 
 ### Clojure 
 
-* https://clojure.org
-* https://4clojure.oxal.org
-* https://tryclojure.org
-* https://www.braveclojure.com
+* [Clojure Official Website](https://clojure.org) – The official Clojure language website.
+* [4Clojure](https://4clojure.oxal.org) – Solve small coding problems interactively to practice Clojure.
+* [Try Clojure](https://tryclojure.org) – An interactive REPL to learn the basics of Clojure online.
+* [Brave Clojure](https://www.braveclojure.com) – A free, beginner-friendly online book to learn Clojure, with practical examples and explanations.
 
 ## Questions, Feedback?
 
