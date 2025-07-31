@@ -9,7 +9,7 @@ The **Amazing Day of Datomic** is an interactive workshop designed to teach you 
 
 ## 📑 Table of Contents
 
-1. [About](#about)
+1. [What You’ll Find in This Repo](#what-youll-find-in-this-repo)
 2. [Getting Started](#getting-started)
     - [Install Clojure](#install-clojure)
     - [Download Datomic Pro](#download-datomic-pro)
