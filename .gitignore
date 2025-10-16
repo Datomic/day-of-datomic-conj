@@ -2,3 +2,5 @@
 .idea/
 .nrepl-port
 day-of-datomic-conj.iml
+.clj-kondo/
+.lsp/
